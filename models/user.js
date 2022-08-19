@@ -18,7 +18,7 @@ const userSchema = mongoose.Schema({
     password: {
         type: String,
         required: [true, 'Please provide a password'],
-        maxLength: [6, 'Name should be greater than 6 chars'],
+        minLength: [6, 'Name should be greater than 6 chars'],
         select: false
     },
     role: {
@@ -28,11 +28,13 @@ const userSchema = mongoose.Schema({
     photo: {
         id: {
             type: String,
-            required: true
+            // required:true
+          
         },
         secureUrl: {
             type: String,
-            required: true
+            // required:true
+         
         }
     },
     forgotPasswordToken: String,
@@ -63,7 +65,7 @@ userSchema.methods.isValidatedPassword = async function (userSendPass) {
 
 // create and return jwt token
 userSchema.methods.getJwtToken = async function () {
-    jwt.sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRY })
+   return jwt.sign({ id: this._id }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRY })
 }
 
 
